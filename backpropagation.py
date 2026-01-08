@@ -16,9 +16,6 @@ class Backpropagation(MewralNet):
     def cost_function(self, current_activations, desired_activations) -> np.ndarray:
         return np.mean((desired_activations-current_activations)**2)
     
-    def sigmoid_derivative(self, array):
-        s = super().sigmoid(array)
-        return s * (1-s)
     
     def backpropagate(self, train_dataset, desired_outputs, epocs = 1000):
         classes  = np.unique(desired_outputs)
@@ -36,9 +33,6 @@ class Backpropagation(MewralNet):
             self.loss_per_epoch.append(total_epocs_loss/len(train_dataset))
         pass
 
-    
-         
-
 
     def nudge_weights(self, i=1):   
         a_current = self.activations[i]
@@ -46,9 +40,9 @@ class Backpropagation(MewralNet):
         z = np.dot(self.weights[i-1], a_prev) + self.biases[i-1]
         
         if i==len(self.layer_dims)-1:
-            print("Attained Base Case, Backpropagating....")
-            delta = self.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
-            delta = self.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
+            print("Reached Base Case, Backpropagating....")
+            delta = MewralNet.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
+            delta = MewralNet.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
 
             weight_derivative = np.outer(delta,a_prev) #dC/dw
             bias_derivative = 1*delta #dz/db is just 1 :) so dC/db is just delta 
@@ -63,7 +57,7 @@ class Backpropagation(MewralNet):
             print(f"Trying to nudge weights in layer{i}")
             forward_error = self.nudge_weights(i+1) #catching dC/da 
             print(f"Backpropagation completeted in layer {i}")
-            delta = self.sigmoid_derivative(z)*forward_error 
+            delta = MewralNet.sigmoid_derivative(z)*forward_error 
 
             weight_derivative = np.outer(delta, a_prev)
             bias_derivative = 1*delta #dz/db is just 1 :) so dC/db is just delta 

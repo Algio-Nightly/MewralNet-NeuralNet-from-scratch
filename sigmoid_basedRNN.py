@@ -48,7 +48,7 @@ class RecurrentMewralNet:
             x_t = np.array([inputs[t]])
             prev_hidden_layer = hidden[t-1]
 
-            current_h = np.tanh(np.dot(x_t, self.Weights_xh)+np.dot(prev_hidden_layer, self.Weights_hh)+self.Biases_hh)
+            current_h = MewralNet.sigmoid(np.dot(x_t, self.Weights_xh)+np.dot(prev_hidden_layer, self.Weights_hh)+self.Biases_hh)
             hidden[t] = current_h
 
             y_t = np.dot(current_h, self.Weights_hy) +self.Biases_hy
@@ -76,7 +76,7 @@ class RecurrentMewralNet:
             h_prev = hidden[t-1]
             raw = np.dot(loss_derivative, self.Weights_hy.T)
             h_total = raw + h_next
-            h_activation = h_total * (1 - (hidden[t] ** 2))
+            h_activation = h_total * (hidden[t] * (1 - hidden[t]))
             GA_Weights_hh += np.dot(h_prev.T, h_activation)
             
             # Gradient for Input -> Hidden Weights
