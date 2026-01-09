@@ -40,7 +40,7 @@ class Backpropagation(MewralNet):
         z = np.dot(self.weights[i-1], a_prev) + self.biases[i-1]
         
         if i==len(self.layer_dims)-1:
-            print("Reached Base Case, Backpropagating....")
+            # print("Reached Base Case, Backpropagating....")
             delta = MewralNet.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
             delta = MewralNet.sigmoid_derivative(z)*2*(a_current-self.desired_activations)
 
@@ -54,9 +54,9 @@ class Backpropagation(MewralNet):
             return activation_derivative
         
         else:
-            print(f"Trying to nudge weights in layer{i}")
+            # print(f"Trying to nudge weights in layer{i}")
             forward_error = self.nudge_weights(i+1) #catching dC/da 
-            print(f"Backpropagation completeted in layer {i}")
+            # print(f"Backpropagation completeted in layer {i}")
             delta = MewralNet.sigmoid_derivative(z)*forward_error 
 
             weight_derivative = np.outer(delta, a_prev)

@@ -1,13 +1,17 @@
 import numpy as np
 from mewralNet import MewralNet
 class RecurrentMewralNet:
-    def __init__(self, input_size, hidden_size, output_size):
+    def __init__(self, input_size, hidden_size, output_size, initialzation = "random"):
         RNNdims = []
         self.hidden_size = hidden_size
-
-        self.Weights_xh = np.random.randn(input_size, hidden_size) / 1000
-        self.Weights_hh = np.random.randn(hidden_size, hidden_size) / 1000
-        self.Weights_hy = np.random.randn(hidden_size, output_size) / 1000
+        if initialzation == "random":
+            self.Weights_xh = np.random.randn(input_size, hidden_size) / 1000
+            self.Weights_hh = np.random.randn(hidden_size, hidden_size) / 1000
+            self.Weights_hy = np.random.randn(hidden_size, output_size) / 1000
+        else:
+            self.Weights_xh = np.random.randn(input_size, hidden_size) * np.sqrt(1.0/input_size)
+            self.Weights_hh = np.random.randn(hidden_size, hidden_size) * np.sqrt(1.0/hidden_size)
+            self.Weights_hy = np.random.randn(hidden_size, output_size) * np.sqrt(1.0/hidden_size)
 
         self.Biases_hh = np.zeros((1,hidden_size))
         self.Biases_hy = np.zeros((1,output_size))
