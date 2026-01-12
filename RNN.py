@@ -67,7 +67,7 @@ class RecurrentMewralNet:
 
         GA_bias_h = np.zeros_like(self.Biases_hh)
         GA_bias_y = np.zeros_like(self.Biases_hy)
-
+        
         h_next = np.zeros((1, self.hidden_size))
         
         for t in reversed(range(len(inputs))):
@@ -92,7 +92,9 @@ class RecurrentMewralNet:
             #Bias updates
             GA_bias_y += loss_derivative
             GA_bias_h += h_activation
- 
 
         return GA_Weights_xh, GA_Weights_hh, GA_Weights_hy, GA_bias_h, GA_bias_y
+    
+    def train():
+        pass
 
